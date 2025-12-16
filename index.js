@@ -20,8 +20,8 @@ app.post("/webhook", line.middleware(config), async (req, res) => {
       await client.replyMessage(event.replyToken, {
         type: "text",
         text: `收到你的位置：
-        緯度 ${event.message.latitude}
-        經度 ${event.message.longitude}`,
+    經度 ${event.message.longitude}
+    緯度 ${event.message.latitude}`,
       });
     }
 
