@@ -149,3 +149,12 @@ async function replyWithQuickReply(replyToken) {
     },
 });
 }
+
+// health check
+    app.get("/", (req, res) => { 
+        res.send("LINE Bot is running"); });
+// Render 一定要這樣寫
+    const PORT = process.env.PORT || 10000;
+    app.listen(PORT, () => {
+        console.log("Server running on port ${PORT}");
+    });
