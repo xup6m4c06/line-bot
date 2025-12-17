@@ -182,7 +182,7 @@ async function replyWithQuickReply(replyToken) {
         {
         type: "action",
         action: {
-            type: "location",
+            type: "message",
             label: "地址",
             text: "地址",
         },
