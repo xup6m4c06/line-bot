@@ -211,16 +211,16 @@ async function replyWithQuickReply(replyToken) {
 async function replyFlavorImage(replyToken) {
     return client.replyMessage(replyToken, {
     type: "image",
-    originalContentUrl: "https://line-bot-lk91.onrender.com/menu.jpg",
-    previewImageUrl: "https://line-bot-lk91.onrender.com/menu.jpg",
+    originalContentUrl: "https://line-bot-lk91.onrender.com/flavor.jpg",
+    previewImageUrl: "https://line-bot-lk91.onrender.com/flavor.jpg",
     });
 }
 
 async function replyMenuImage(replyToken) {
     return client.replyMessage(replyToken, {
     type: "image",
-    originalContentUrl: "https://line-bot-lk91.onrender.com/flavor.jpg",
-    previewImageUrl: "https://line-bot-lk91.onrender.com/flavor.jpg",
+    originalContentUrl: "https://line-bot-lk91.onrender.com/menu.jpg",
+    previewImageUrl: "https://line-bot-lk91.onrender.com/menu.jpg",
     });
 }
 
