@@ -63,18 +63,41 @@ async function handleLocation(event) {
 
 async function handleText(event) {
     const text = event.message.text;
-
-    if (text === "章魚燒")
-        return sendTemplate(event.replyToken);
-
-    if (text === "flex")
-        return sendFlex(event.replyToken);
     
     if (text === "圖片")
         return sendImagemap(event.replyToken);
 
+    if (text === "章魚燒")
+        return sendTemplate(event.replyToken);
+
+    if (text === "活動")
+        return sendFlex(event.replyToken);
+
     if (text === "選單")
         return replyWithQuickReply(event.replyToken);
+
+    if (text === "口味")
+        return replyFlavorImage(event.replyToken);
+
+    if (text === "菜單")
+        return replyMenuImage(event.replyToken);
+
+    if( text === "營業時間"){
+        return client.replyMessage(event.replyToken, {
+            type: "text",
+            text: "營業時間：每日 16:00 - 23:00（ 週六公休 ）",
+        });
+    }
+
+    if( text === "地址"){
+        return client.replyMessage(event.replyToken, {
+            type: "text",
+            text: "地址：嘉義縣民雄鄉神農路129-1號",
+        });
+    }
+        
+    if( text === "旋轉盤")
+        return replyWheelOfFortune(event.replyToken);
 }
 
 async function sendImagemap(replyToken) {
@@ -175,22 +198,30 @@ async function replyWithQuickReply(replyToken) {
         {
         type: "action",
         action: {
-            type: "message",
+            type: "uri",
             label: "旋轉盤",
-            text: "旋轉盤",
-        },
-        },
-        {
-        type: "action",
-        action: {
-            type: "message",
-            label: "訂餐",
-            text: "訂餐",
+            uri: "https://www.instagram.com/reel/DQy4A1NkuIq/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
         },
         },
     ],
     },
 });
+}
+
+async function replyFlavorImage(replyToken) {
+    return client.replyMessage(replyToken, {
+    type: "image",
+    originalContentUrl: "https://line-bot-lk91.onrender.com/menu.jpg",
+    previewImageUrl: "https://line-bot-lk91.onrender.com/menu.jpg",
+    });
+}
+
+async function replyMenuImage(replyToken) {
+    return client.replyMessage(replyToken, {
+    type: "image",
+    originalContentUrl: "https://line-bot-lk91.onrender.com/flavor.jpg",
+    previewImageUrl: "https://line-bot-lk91.onrender.com/flavor.jpg",
+    });
 }
 
 // health check
@@ -201,3 +232,4 @@ async function replyWithQuickReply(replyToken) {
     app.listen(PORT, () => {
         console.log("Server running on port ${PORT}");
     });
+
