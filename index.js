@@ -77,7 +77,7 @@ async function handleLocation(event) {
 async function sendImagemap(replyToken) {
     return client.replyMessage(replyToken, {
         type: "imagemap",
-        baseUrl: "https://example.com/imagemap",
+        baseUrl: "https://github.com/xup6m4c06/line-bot/blob/main/images/mojiang_takoyaki.jpg",
         altText: "Imagemap 範例",
         baseSize: { width: 1040, height: 1040 },
         actions: [
