@@ -113,7 +113,7 @@ async function sendImagemap(replyToken) {
 async function sendTemplate(replyToken) {
     return client.replyMessage(replyToken, {
     type: "template",
-    altText: "Template 範例",
+    altText: "章魚燒口味",
     template: {
     type: "image_carousel",
     
