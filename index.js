@@ -10,6 +10,8 @@ const config = {
 
 const client = new line.Client(config);
 
+app.use(express.static("public"));
+
 /* ======================
     Webhook（唯一）
 ====================== */
@@ -26,22 +28,6 @@ app.post("/webhook", line.middleware(config), async (req, res) => {
         res.sendStatus(500);
     }
 });
-
-async function handleText(event) {
-    const text = event.message.text;
-
-    if (text === "章魚燒")
-        return sendTemplate(event.replyToken);
-
-    if (text === "flex")
-        return sendFlex(event.replyToken);
-    
-    if (text === "圖片")
-        return sendImagemap(event.replyToken);
-
-    if (text === "選單")
-        return replyWithQuickReply(event.replyToken);
-}
 
 /* ======================
     Message Router
@@ -75,10 +61,26 @@ async function handleLocation(event) {
     });
 }
 
+async function handleText(event) {
+    const text = event.message.text;
+
+    if (text === "章魚燒")
+        return sendTemplate(event.replyToken);
+
+    if (text === "flex")
+        return sendFlex(event.replyToken);
+    
+    if (text === "圖片")
+        return sendImagemap(event.replyToken);
+
+    if (text === "選單")
+        return replyWithQuickReply(event.replyToken);
+}
+
 async function sendImagemap(replyToken) {
     return client.replyMessage(replyToken, {
         type: "imagemap",
-        baseUrl: "https://github.com/xup6m4c06/line-bot/blob/main/images/mojiang_takoyaki.jpg",
+        baseUrl: "https://line-bot-lk91.onrender.com/mojiang_takoyaki.jpg",
         altText: "Imagemap 範例",
         baseSize: { width: 1040, height: 1040 },
         actions: [
