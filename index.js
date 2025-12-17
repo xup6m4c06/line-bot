@@ -3,50 +3,149 @@ const line = require("@line/bot-sdk");
 
 const app = express();
 
-// LINE 設定（從 Render 環境變數讀）
 const config = {
-  channelAccessToken: process.env.LINE_CHANNEL_ACCESS_TOKEN,
-  channelSecret: process.env.LINE_CHANNEL_SECRET,
+    channelAccessToken: process.env.LINE_CHANNEL_ACCESS_TOKEN,
+    channelSecret: process.env.LINE_CHANNEL_SECRET,
 };
 
 const client = new line.Client(config);
 
-// webhook（一定要）
+/* ======================
+    Webhook（唯一）
+====================== */
 app.post("/webhook", line.middleware(config), async (req, res) => {
-    // ❶ 第一時間回 200（LINE 最在乎這個）
-    res.sendStatus(200);
-
     try {
-        const events = req.body.events;
-    if (!events || events.length === 0) return;
-
-    for (const event of events) {
-        if (
-            event.type === "message" &&
-            event.message.type === "location"
-        ) {
-        await client.replyMessage(event.replyToken, {
-        type: "text",
-        text: `收到你的位置：
-經度 ${event.message.longitude}
-緯度 ${event.message.latitude}`,
-        });
+    for (const event of req.body.events) {
+        if (event.type === "message") {
+            await handleMessage(event);
         }
     }
-} catch (err) {
-    console.error("Webhook handler error:", err);
+    res.sendStatus(200);
+    } catch (err) {
+        console.error(err);
+        res.sendStatus(500);
     }
 });
 
+async function handleText(event) {
+    const text = event.message.text;
 
-// health check（建議）
-app.get("/", (req, res) => {
-    res.send("LINE Bot is running");
+    if (text === "menu")
+        return sendTemplate(event.replyToken);
+
+    if (text === "flex")
+        return sendFlex(event.replyToken);
+    
+    if (text === "image")
+        return sendImagemap(event.replyToken);
+
+    return replyWithQuickReply(event.replyToken);
+}
+
+/* ======================
+    Message Router
+====================== */
+async function handleMessage(event) {
+    const type = event.message.type;
+
+    switch (type) {
+        case "location":
+        return handleLocation(event);
+
+        case "text":
+        return handleText(event);
+
+        default:
+        return client.replyMessage(event.replyToken, {
+            type: "text",
+            text: "目前不支援此訊息類型",
+        });
+    }
+}
+
+async function handleLocation(event) {
+    const { latitude, longitude } = event.message;
+
+    return client.replyMessage(event.replyToken, {
+    type: "text",
+    text: `收到位置：
+緯度 ${latitude}
+經度 ${longitude}`,
+    });
+}
+
+async function sendImagemap(replyToken) {
+    return client.replyMessage(replyToken, {
+        type: "imagemap",
+        baseUrl: "https://example.com/imagemap",
+        altText: "Imagemap 範例",
+        baseSize: { width: 1040, height: 1040 },
+        actions: [
+        {
+            type: "message",
+            text: "點擊區塊 A",
+            area: { x: 0, y: 0, width: 520, height: 520 },
+        },
+        ],
+    });
+}
+
+async function sendTemplate(replyToken) {
+    return client.replyMessage(replyToken, {
+    type: "template",
+    altText: "Template 範例",
+    template: {
+    type: "buttons",
+    title: "功能選單",
+    text: "請選擇",
+    actions: [
+        { type: "message", label: "位置", text: "location" },
+        { type: "message", label: "圖片", text: "image" },
+        ],
+    },
+    });
+}
+
+async function sendFlex(replyToken) {
+    return client.replyMessage(replyToken, {
+    type: "flex",
+    altText: "Flex 範例",
+    contents: {
+    type: "bubble",
+    body: {
+        type: "box",
+        layout: "vertical",
+        contents: [
+            { type: "text", text: "Flex Message", weight: "bold" },
+        ],
+    },
+    },
+    });
+}
+
+async function replyWithQuickReply(replyToken) {
+    return client.replyMessage(replyToken, {
+    type: "text",
+    text: "請選擇功能",
+    quickReply: {
+    items: [
+        {
+        type: "action",
+        action: {
+            type: "message",
+            label: "傳位置",
+            text: "location",
+        },
+        },
+        {
+        type: "action",
+        action: {
+            type: "message",
+            label: "選單",
+            text: "menu",
+        },
+        },
+    ],
+    },
 });
-
-// ⚠️ Render 一定要這樣寫
-const PORT = process.env.PORT || 10000;
-app.listen(PORT, () => {
-console.log(`Server running on port ${PORT}`);
-});
-
+}
