@@ -13,40 +13,40 @@ const client = new line.Client(config);
 
 // webhook（一定要）
 app.post("/webhook", line.middleware(config), async (req, res) => {
-  // ❶ 第一時間回 200（LINE 最在乎這個）
-  res.sendStatus(200);
+    // ❶ 第一時間回 200（LINE 最在乎這個）
+    res.sendStatus(200);
 
-  try {
-    const events = req.body.events;
+    try {
+        const events = req.body.events;
     if (!events || events.length === 0) return;
 
     for (const event of events) {
-      if (
-        event.type === "message" &&
-        event.message.type === "location"
-      ) {
+        if (
+            event.type === "message" &&
+            event.message.type === "location"
+        ) {
         await client.replyMessage(event.replyToken, {
-          type: "text",
-          text: `收到你的位置：
+        type: "text",
+        text: `收到你的位置：
 經度 ${event.message.longitude}
 緯度 ${event.message.latitude}`,
         });
-      }
+        }
     }
-  } catch (err) {
+} catch (err) {
     console.error("Webhook handler error:", err);
-  }
+    }
 });
 
 
 // health check（建議）
 app.get("/", (req, res) => {
-  res.send("LINE Bot is running");
+    res.send("LINE Bot is running");
 });
 
 // ⚠️ Render 一定要這樣寫
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+console.log(`Server running on port ${PORT}`);
 });
 
