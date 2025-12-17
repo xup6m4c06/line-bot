@@ -13,24 +13,31 @@ const client = new line.Client(config);
 
 // webhook（一定要）
 app.post("/webhook", line.middleware(config), async (req, res) => {
-  try {
-    const event = req.body.events[0];
+  // ❶ 第一時間回 200（LINE 最在乎這個）
+  res.sendStatus(200);
 
-    if (event.type === "message" && event.message.type === "location") {
-      await client.replyMessage(event.replyToken, {
-        type: "text",
-        text: `收到你的位置：
+  try {
+    const events = req.body.events;
+    if (!events || events.length === 0) return;
+
+    for (const event of events) {
+      if (
+        event.type === "message" &&
+        event.message.type === "location"
+      ) {
+        await client.replyMessage(event.replyToken, {
+          type: "text",
+          text: `收到你的位置：
 經度 ${event.message.longitude}
 緯度 ${event.message.latitude}`,
-      });
+        });
+      }
     }
-
-    res.sendStatus(200);
   } catch (err) {
-    console.error(err);
-    res.sendStatus(500);
+    console.error("Webhook handler error:", err);
   }
 });
+
 
 // health check（建議）
 app.get("/", (req, res) => {
