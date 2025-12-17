@@ -30,16 +30,17 @@ app.post("/webhook", line.middleware(config), async (req, res) => {
 async function handleText(event) {
     const text = event.message.text;
 
-    if (text === "menu")
+    if (text === "章魚燒")
         return sendTemplate(event.replyToken);
 
     if (text === "flex")
         return sendFlex(event.replyToken);
     
-    if (text === "image")
+    if (text === "圖片")
         return sendImagemap(event.replyToken);
 
-    return replyWithQuickReply(event.replyToken);
+    if (text === "選單")
+        return replyWithQuickReply(event.replyToken);
 }
 
 /* ======================
