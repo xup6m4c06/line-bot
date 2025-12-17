@@ -115,15 +115,61 @@ async function sendTemplate(replyToken) {
     type: "template",
     altText: "Template 範例",
     template: {
-    type: "buttons",
-    title: "功能選單",
-    text: "請選擇",
-    actions: [
-        { type: "message", label: "位置", text: "location" },
-        { type: "message", label: "圖片", text: "image" },
-        ],
+    type: "image carousel",
+    
+    columns: [
+        {
+        imageUrl: "https://line-bot-lk91.onrender.com/flavor1.jpg",
+        action: {
+            type: "uri",
+            label: "原味",
+            uri: "https://line-bot-lk91.onrender.com/flavor1.jpg",
+        },
+        },
+        {
+        imageUrl: "https://line-bot-lk91.onrender.com/flavor2.jpg",
+        action: {
+            type: "uri",
+            label: "起司",
+            uri: "https://line-bot-lk91.onrender.com/flavor2.jpg",
+        },
+        },
+        {
+        imageUrl: "https://line-bot-lk91.onrender.com/flavor3.jpg",
+        action: {
+            type: "uri",
+            label: "海苔",
+            uri: "https://line-bot-lk91.onrender.com/flavor3.jpg",
+        },
+        },
+        {
+        imageUrl: "https://line-bot-lk91.onrender.com/flavor4.jpg",
+        action: {
+            type: "uri",
+            label: "芥末",
+            uri: "https://line-bot-lk91.onrender.com/flavor4.jpg",
+        },
+        },
+        {
+        imageUrl: "https://line-bot-lk91.onrender.com/flavor5.jpg",
+        action: {
+            type: "uri",
+            label: "梅子",
+            uri: "https://line-bot-lk91.onrender.com/flavor5.jpg",
+        },
+        },
+        {
+        imageUrl: "https://line-bot-lk91.onrender.com/flavor6.jpg",
+        action: {
+            type: "uri",
+            label: "泡菜",
+            uri: "https://line-bot-lk91.onrender.com/flavor6.jpg",
+        },
+        },
+    ],
     },
     });
+
 }
 
 async function sendFlex(replyToken) {
