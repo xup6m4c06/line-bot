@@ -134,16 +134,56 @@ async function replyWithQuickReply(replyToken) {
         type: "action",
         action: {
             type: "message",
-            label: "傳位置",
-            text: "location",
+            label: "口味",
+            text: "口味",
         },
         },
         {
         type: "action",
         action: {
             type: "message",
-            label: "選單",
-            text: "menu",
+            label: "菜單",
+            text: "菜單",
+        },
+        },
+        {
+        type: "action",
+        action: {
+            type: "message",
+            label: "營業時間",
+            text: "營業時間",
+        },
+        },
+        {
+        type: "action",
+        action: {
+            type: "location",
+            label: "地址",
+            text: "地址",
+        },
+        },
+        {
+        type: "action",
+        action: {
+            type: "uri",
+            label: "IG",
+            uri: "https://www.instagram.com/mojiang_takoyaki/",
+        },
+        },
+        {
+        type: "action",
+        action: {
+            type: "message",
+            label: "旋轉盤",
+            text: "旋轉盤",
+        },
+        },
+        {
+        type: "action",
+        action: {
+            type: "message",
+            label: "訂餐",
+            text: "訂餐",
         },
         },
     ],
