@@ -115,7 +115,7 @@ async function sendTemplate(replyToken) {
     type: "template",
     altText: "Template 範例",
     template: {
-    type: "image carousel",
+    type: "image_carousel",
     
     columns: [
         {
