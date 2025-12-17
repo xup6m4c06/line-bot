@@ -79,9 +79,6 @@ async function handleText(event) {
     if (text === "口味")
         return replyFlavorImage(event.replyToken);
 
-    if (text === "菜單")
-        return replyMenuImage(event.replyToken);
-
     if( text === "營業時間"){
         return client.replyMessage(event.replyToken, {
             type: "text",
@@ -95,9 +92,6 @@ async function handleText(event) {
             text: "地址：嘉義縣民雄鄉神農路129-1號",
         });
     }
-        
-    if( text === "旋轉盤")
-        return replyWheelOfFortune(event.replyToken);
 }
 
 async function sendImagemap(replyToken) {
@@ -191,6 +185,14 @@ async function replyWithQuickReply(replyToken) {
         type: "action",
         action: {
             type: "uri",
+            label: "外送",
+            uri: "https://www.foodpanda.com.tw/restaurant/r7b7/mo-jiang-zhang-yu-shao-min-xiong-zhong-zheng-dian",
+        },
+        },
+        {
+        type: "action",
+        action: {
+            type: "uri",
             label: "IG",
             uri: "https://www.instagram.com/mojiang_takoyaki/",
         },
@@ -198,9 +200,17 @@ async function replyWithQuickReply(replyToken) {
         {
         type: "action",
         action: {
-            type: "uri",
-            label: "旋轉盤",
-            uri: "https://www.instagram.com/reel/DQy4A1NkuIq/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+            type: "message",
+            label: "轉盤",
+            text: "轉盤",
+        },
+        },
+        {
+        type: "action",
+        action: {
+            type: "message",
+            label: "訂餐",
+            text: "訂餐",
         },
         },
     ],
@@ -213,14 +223,6 @@ async function replyFlavorImage(replyToken) {
     type: "image",
     originalContentUrl: "https://line-bot-lk91.onrender.com/flavor.jpg",
     previewImageUrl: "https://line-bot-lk91.onrender.com/flavor.jpg",
-    });
-}
-
-async function replyMenuImage(replyToken) {
-    return client.replyMessage(replyToken, {
-    type: "image",
-    originalContentUrl: "https://line-bot-lk91.onrender.com/menu.jpg",
-    previewImageUrl: "https://line-bot-lk91.onrender.com/menu.jpg",
     });
 }
 
