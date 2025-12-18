@@ -73,9 +73,6 @@ async function handleText(event) {
     if (text === "活動")
         return sendFlex(event.replyToken);
 
-    if (text === "選單")
-        return replyWithQuickReply(event.replyToken);
-
     if (text === "口味")
         return replyFlavorImage(event.replyToken);
 
@@ -92,6 +89,8 @@ async function handleText(event) {
             text: "地址：嘉義縣民雄鄉神農路129-1號",
         });
     }
+
+    return replyWithQuickReply(event.replyToken);
 }
 
 async function sendImagemap(replyToken) {
