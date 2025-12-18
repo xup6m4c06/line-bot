@@ -64,17 +64,21 @@ async function handleLocation(event) {
 async function handleText(event) {
     const text = event.message.text;
     
+    /*
     if (text === "圖片")
         return sendImagemap(event.replyToken);
+    */
 
     if (text === "章魚燒")
         return sendTemplate(event.replyToken);
 
+    /*
     if (text === "活動")
         return sendFlex(event.replyToken);
 
     if (text === "口味")
         return replyFlavorImage(event.replyToken);
+
 
     if( text === "營業時間"){
         return client.replyMessage(event.replyToken, {
@@ -89,6 +93,7 @@ async function handleText(event) {
             text: "地址：嘉義縣民雄鄉神農路129-1號",
         });
     }
+    */
 
     return replyWithQuickReply(event.replyToken);
 }
