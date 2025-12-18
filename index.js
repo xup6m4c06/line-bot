@@ -199,8 +199,24 @@ async function replyWithQuickReply(replyToken) {
         type: "action",
         action: {
             type: "message",
+            label: "訂餐",
+            text: "訂餐",
+        },
+        },
+        {
+        type: "action",
+        action: {
+            type: "message",
             label: "口味",
             text: "口味",
+        },
+        },
+        {
+        type: "action",
+        action: {
+            type: "message",
+            label: "轉盤",
+            text: "轉盤",
         },
         },
         {
@@ -241,22 +257,6 @@ async function replyWithQuickReply(replyToken) {
             type: "uri",
             label: "IG",
             uri: "https://www.instagram.com/mojiang_takoyaki/",
-        },
-        },
-        {
-        type: "action",
-        action: {
-            type: "message",
-            label: "轉盤",
-            text: "轉盤",
-        },
-        },
-        {
-        type: "action",
-        action: {
-            type: "message",
-            label: "訂餐",
-            text: "訂餐",
         },
         },
     ],
